@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: scoring_db_container
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Javid@123
+      - MSSQL_DATABASE=scoringdb
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+volumes:
+  sqlserver_data:
