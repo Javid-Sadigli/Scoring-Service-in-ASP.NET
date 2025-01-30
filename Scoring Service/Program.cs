@@ -1,18 +1,33 @@
 using Microsoft.EntityFrameworkCore;
+using Scoring_Service.Configurations.Conditions;
 using Scoring_Service.Data;
+using Scoring_Service.Services;
+using Scoring_Service.Services.Conditions;
+using Scoring_Service.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Db Context
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Configurations
+builder.Services.Configure<AgeConditionConfiguration>(
+    builder.Configuration.GetSection("Application.Conditions.AgeCondition"));
+
+// Mappers 
+builder.Services.AddAutoMapper(typeof(Program));
+
+// Services 
+builder.Services.AddScoped<ICondition, AgeCondition>();
+builder.Services.AddScoped<ScoringService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
