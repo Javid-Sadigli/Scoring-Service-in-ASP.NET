@@ -14,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 // Configurations
 builder.Services.Configure<AgeConditionConfiguration>(
-    builder.Configuration.GetSection("Application.Conditions.AgeCondition"));
+    builder.Configuration.GetSection("Application:Conditions:AgeCondition"));
 
 // Mappers 
 builder.Services.AddAutoMapper(typeof(Program));
