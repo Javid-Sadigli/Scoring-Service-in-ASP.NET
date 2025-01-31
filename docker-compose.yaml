@@ -1,5 +1,14 @@
 version: '3.8'
 services:
+  scoring-service:
+    build:
+      context: .
+      dockerfile: "Scoring Service/Dockerfile"
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: scoring_db_container
@@ -11,5 +20,6 @@ services:
       - MSSQL_DATABASE=scoringdb
     volumes:
       - sqlserver_data:/var/opt/mssql
+
 volumes:
   sqlserver_data:
