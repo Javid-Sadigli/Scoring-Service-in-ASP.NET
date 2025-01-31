@@ -10,16 +10,19 @@ namespace Scoring_Service.Services.Conditions
         public string Id => "CITIZENSHIP_CONDITION";
 
         private readonly CitizenshipConditionConfiguration configuration;
+        private readonly ILogger<CitizenshipCondition> logger;
 
-        public CitizenshipCondition(IOptions<CitizenshipConditionConfiguration> configuration)
+        public CitizenshipCondition(IOptions<CitizenshipConditionConfiguration> configuration, ILogger<CitizenshipCondition> logger)
         {
             this.configuration = configuration.Value;
+            this.logger = logger;
         }
 
         public ConditionEvaulationResult Evaluate(CustomerRequest customerRequest)
         {
             if (customerRequest.Citizenship.ToUpper().Equals(configuration.Value.ToUpper()))
             {
+                logger.LogInformation("Customer {CustomerId} has passed the evaluation of {ConditionId}", customerRequest.Id, this.Id);
                 return new ConditionEvaulationResult
                 {
                     Amount = configuration.CreditAmount,
@@ -30,6 +33,7 @@ namespace Scoring_Service.Services.Conditions
             }
             else
             {
+                logger.LogInformation("Customer {CustomerId} has not passed the evaluation of {ConditionId}", customerRequest.Id, this.Id);
                 return new ConditionEvaulationResult
                 {
                     Amount = 0,

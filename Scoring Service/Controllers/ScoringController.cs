@@ -11,15 +11,20 @@ namespace Scoring_Service.Controllers
     public class ScoringController : ControllerBase
     {
         private readonly ScoringService scoringService;
+        private readonly ILogger<ScoringController> logger;
 
-        public ScoringController(ScoringService scoringService)
+        private static readonly string LOG_TEMPLATE = "{RequestMethod} request to /api/customer-evaluation{Endpoint}";
+
+        public ScoringController(ScoringService scoringService, ILogger<ScoringController> logger)
         {
             this.scoringService = scoringService;
+            this.logger = logger;
         }
 
         [HttpPost("evaluate")]
         public IActionResult EvaluateCustomer([FromBody] CustomerRequestDto customerRequest)
         {
+            logger.LogInformation(LOG_TEMPLATE, "POST", "/evaluate");
             CustomerEvaluationResponseDto response = scoringService.EvaluateCustomer(customerRequest);
             return Ok(response);
         }

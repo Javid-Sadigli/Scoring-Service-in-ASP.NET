@@ -10,16 +10,19 @@ namespace Scoring_Service.Services.Conditions
         public string Id => "SALARY_CONDITION";
 
         private readonly SalaryConditionConfiguration configuration;
+        private readonly ILogger<SalaryCondition> logger; 
 
-        public SalaryCondition(IOptions<SalaryConditionConfiguration> configuration)
+        public SalaryCondition(IOptions<SalaryConditionConfiguration> configuration , ILogger<SalaryCondition> logger)
         {
-            this.configuration = configuration.Value; 
+            this.configuration = configuration.Value;
+            this.logger = logger;
         }
 
         public ConditionEvaulationResult Evaluate(CustomerRequest customerRequest)
         {
             if(customerRequest.Salary >= configuration.Min)
             {
+                logger.LogInformation("Customer {CustomerId} has passed the evaluation of {ConditionId}", customerRequest.Id, this.Id);
                 return new ConditionEvaulationResult
                 {
                     Amount = configuration.CreditAmount,
@@ -30,6 +33,7 @@ namespace Scoring_Service.Services.Conditions
             }
             else
             {
+                logger.LogInformation("Customer {CustomerId} has not passed the evaluation of {ConditionId}", customerRequest.Id, this.Id);
                 return new ConditionEvaulationResult
                 {
                     Amount = 0,

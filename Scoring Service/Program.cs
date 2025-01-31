@@ -20,6 +20,11 @@ builder.Services.Configure<CitizenshipConditionConfiguration>(
 builder.Services.Configure<SalaryConditionConfiguration>(
     builder.Configuration.GetSection("Application:Conditions:SalaryCondition"));
 
+// Logging 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+
 // Mappers 
 builder.Services.AddAutoMapper(typeof(Program));
 

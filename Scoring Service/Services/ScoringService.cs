@@ -11,16 +11,19 @@ namespace Scoring_Service.Services
     {
         private readonly IEnumerable<ICondition> conditions;
         private readonly ApplicationDbContext dbContext;
-        private readonly IMapper mapper; 
+        private readonly IMapper mapper;
+        private readonly ILogger<ScoringService> logger;
 
         public ScoringService(
             IEnumerable<ICondition> conditions,
             ApplicationDbContext dbContext, 
-            IMapper mapper
+            IMapper mapper, 
+            ILogger<ScoringService> logger
         ){
             this.conditions = conditions;
             this.mapper = mapper;
             this.dbContext = dbContext;
+            this.logger = logger;
         }
 
         public CustomerEvaluationResponseDto EvaluateCustomer(CustomerRequestDto customerRequestDto)
@@ -33,7 +36,9 @@ namespace Scoring_Service.Services
             CustomerEvaluationResponseDto response = new CustomerEvaluationResponseDto();
             response.CustomerFinCode = customerRequest.FinCode;
             response.EvaulationResults = new List<ConditionEvaulationResult>();
-            response.CreditAmount = 0; 
+            response.CreditAmount = 0;
+
+            logger.LogInformation("Evaluating customer with id : {CustomerId}", customerRequest.Id);
 
             foreach (ICondition condition in conditions)
             {
@@ -50,6 +55,9 @@ namespace Scoring_Service.Services
             }
 
             dbContext.SaveChanges();
+
+            logger.LogInformation("Evaluation completed. {NewLine}CustomerId : {CustomerId}, TotalCredit : {TotalCredit}", Environment.NewLine, customerRequest.Id, response.CreditAmount); 
+
             return response;
         }
     }
