@@ -40,7 +40,11 @@ namespace Scoring_Service.Services
                 ConditionEvaulationResult evaulationResult = condition.Evaluate(customerRequest);
 
                 response.EvaulationResults.Add(evaulationResult);
-                response.CreditAmount += evaulationResult.Amount;
+
+                if (evaulationResult.IsSatisfied)
+                {
+                    response.CreditAmount += evaulationResult.Amount;
+                }
 
                 dbContext.EvaulationResults.Add(evaulationResult);
             }

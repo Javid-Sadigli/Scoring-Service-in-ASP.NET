@@ -15,12 +15,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 // Configurations
 builder.Services.Configure<AgeConditionConfiguration>(
     builder.Configuration.GetSection("Application:Conditions:AgeCondition"));
+builder.Services.Configure<CitizenshipConditionConfiguration>(
+    builder.Configuration.GetSection("Application:Conditions:CitizenshipCondition"));
+builder.Services.Configure<SalaryConditionConfiguration>(
+    builder.Configuration.GetSection("Application:Conditions:SalaryCondition"));
 
 // Mappers 
 builder.Services.AddAutoMapper(typeof(Program));
 
 // Services 
 builder.Services.AddScoped<ICondition, AgeCondition>();
+builder.Services.AddScoped<ICondition, CitizenshipCondition>();
+builder.Services.AddScoped<ICondition, SalaryCondition>();
 builder.Services.AddScoped<ScoringService>();
 
 builder.Services.AddControllers();

@@ -6,7 +6,7 @@ using Scoring_Service.Services;
 
 namespace Scoring_Service.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/customer-evaluation")]
     [ApiController]
     public class ScoringController : ControllerBase
     {
