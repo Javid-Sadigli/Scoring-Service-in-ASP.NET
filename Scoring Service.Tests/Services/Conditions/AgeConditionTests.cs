@@ -48,6 +48,7 @@ namespace Scoring_Service.Tests.Services.Conditions
 
             ConditionEvaulationResult result = ageCondition.Evaluate(customerRequest);
 
+            Assert.NotNull(result);
             Assert.Equal(ageCondition.Id, result.ConditionId);
             Assert.True(result.IsSatisfied);
             Assert.Equal(configuration.CreditAmount, result.Amount);
@@ -70,6 +71,7 @@ namespace Scoring_Service.Tests.Services.Conditions
 
             ConditionEvaulationResult result = ageCondition.Evaluate(customerRequest);
 
+            Assert.NotNull(result);
             Assert.Equal(ageCondition.Id, result.ConditionId);
             Assert.False(result.IsSatisfied);
             Assert.Equal(0, result.Amount);
@@ -92,6 +94,7 @@ namespace Scoring_Service.Tests.Services.Conditions
 
             ConditionEvaulationResult result = ageCondition.Evaluate(customerRequest);
 
+            Assert.NotNull(result);
             Assert.Equal(ageCondition.Id, result.ConditionId);
             Assert.False(result.IsSatisfied);
             Assert.Equal(0, result.Amount);
