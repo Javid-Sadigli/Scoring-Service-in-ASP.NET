@@ -10,7 +10,7 @@ using Scoring_Service.Configurations.Conditions;
 using Scoring_Service.Models.Entities;
 using Scoring_Service.Services.Conditions;
 
-namespace Scoring_Service.Tests.Services.Conditions
+namespace Scoring_Service.UnitTests.Services.Conditions
 {
     public class AgeConditionTests
     {
