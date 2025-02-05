@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoring Service.UnitTests", "Scoring Service.UnitTests\Scoring Service.UnitTests.csproj", "{4F3E213C-482D-495D-B1A1-9B0CEDEFF0FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scoring Service.IntegrationTests", "Scoring Service.IntegrationTests\Scoring Service.IntegrationTests.csproj", "{4764B477-DFB2-4B1C-A394-3AA436FD8AE3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4F3E213C-482D-495D-B1A1-9B0CEDEFF0FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F3E213C-482D-495D-B1A1-9B0CEDEFF0FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F3E213C-482D-495D-B1A1-9B0CEDEFF0FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4764B477-DFB2-4B1C-A394-3AA436FD8AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4764B477-DFB2-4B1C-A394-3AA436FD8AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4764B477-DFB2-4B1C-A394-3AA436FD8AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4764B477-DFB2-4B1C-A394-3AA436FD8AE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

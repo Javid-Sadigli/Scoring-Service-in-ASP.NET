@@ -5,57 +5,66 @@ using Scoring_Service.Services;
 using Scoring_Service.Services.Conditions;
 using Scoring_Service.Services.Interfaces;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Scoring_Service
+{
+    public class Program
+    {
+        private static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-// Db Context
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+            // Db Context
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configurations
-builder.Services.Configure<AgeConditionConfiguration>(
-    builder.Configuration.GetSection("Application:Conditions:AgeCondition"));
-builder.Services.Configure<CitizenshipConditionConfiguration>(
-    builder.Configuration.GetSection("Application:Conditions:CitizenshipCondition"));
-builder.Services.Configure<SalaryConditionConfiguration>(
-    builder.Configuration.GetSection("Application:Conditions:SalaryCondition"));
+            // Configurations
+            builder.Services.Configure<AgeConditionConfiguration>(
+                builder.Configuration.GetSection("Application:Conditions:AgeCondition"));
+            builder.Services.Configure<CitizenshipConditionConfiguration>(
+                builder.Configuration.GetSection("Application:Conditions:CitizenshipCondition"));
+            builder.Services.Configure<SalaryConditionConfiguration>(
+                builder.Configuration.GetSection("Application:Conditions:SalaryCondition"));
 
-// Logging 
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+            // Logging 
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+            builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
 
-// Mappers 
-builder.Services.AddAutoMapper(typeof(Program));
+            // Mappers 
+            builder.Services.AddAutoMapper(typeof(Program));
 
-// Services 
-builder.Services.AddScoped<ICondition, AgeCondition>();
-builder.Services.AddScoped<ICondition, CitizenshipCondition>();
-builder.Services.AddScoped<ICondition, SalaryCondition>();
-builder.Services.AddScoped<ScoringService>();
+            // Services 
+            builder.Services.AddScoped<ICondition, AgeCondition>();
+            builder.Services.AddScoped<ICondition, CitizenshipCondition>();
+            builder.Services.AddScoped<ICondition, SalaryCondition>();
+            builder.Services.AddScoped<ScoringService>();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
 
-var app = builder.Build();
+            var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment()) 
-//{ 
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+            // Configure the HTTP request pipeline.
+            //if (app.Environment.IsDevelopment()) 
+            //{ 
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI();
+            //}
 
-app.UseSwagger();
-app.UseSwaggerUI();
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
-app.UseAuthorization();
+            app.UseAuthorization();
 
-app.MapControllers();
+            app.MapControllers();
 
-app.Run();
+            app.Run();
+        }
+    }
+}
