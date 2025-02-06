@@ -47,18 +47,18 @@ This command will download the images from the corresponding resources, and will
             "creditAmount": 0,
             "evaulationResults": [
                 {
-                "id": "guid",
-                "conditionId": 1,
-                "isSatisfied": true,
-                "amount": 1000,
-                "customerRequestId": "guid"
+                    "id": "guid",
+                    "conditionId": 1,
+                    "isSatisfied": true,
+                    "amount": 1000,
+                    "customerRequestId": "guid"
                 },
                 {
-                "id": "guid",
-                "conditionId": 2,
-                "isSatisfied": false,
-                "amount": 0,
-                "customerRequestId": "guid"
+                    "id": "guid",
+                    "conditionId": 2,
+                    "isSatisfied": false,
+                    "amount": 0,
+                    "customerRequestId": "guid"
                 }
             ]
         }
