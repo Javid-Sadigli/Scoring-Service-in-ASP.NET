@@ -59,8 +59,7 @@ This command will download the images from the corresponding resources, and will
                 "isSatisfied": false,
                 "amount": 0,
                 "customerRequestId": "guid"
-                },
-                // ...
+                }
             ]
         }
         ``` 
@@ -106,11 +105,10 @@ In the main project, you can see `appsettings.json` file. Here, there are the co
             "SalaryCondition": {
                 "Min": 1000,
                 "CreditAmount": 2000
-            }
+            },
 
-            // Your condition 
             "CustomCondition": {
-                // Define here the configuration of condition.
+                "_comment": "Define here the configuration of condition."
             }
         }
     }
