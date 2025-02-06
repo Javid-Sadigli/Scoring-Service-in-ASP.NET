@@ -7,7 +7,7 @@ namespace Scoring_Service.Services.Conditions
 {
     public class SalaryCondition : ICondition
     {
-        public string Id => "SALARY_CONDITION";
+        public int Id {  get; }
 
         private readonly SalaryConditionConfiguration configuration;
         private readonly ILogger<SalaryCondition> logger; 
@@ -16,6 +16,7 @@ namespace Scoring_Service.Services.Conditions
         {
             this.configuration = configuration.Value;
             this.logger = logger;
+            this.Id = this.configuration.ConditionId; 
         }
 
         public ConditionEvaulationResult Evaluate(CustomerRequest customerRequest)

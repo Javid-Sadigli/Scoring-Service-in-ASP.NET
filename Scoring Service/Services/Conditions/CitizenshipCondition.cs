@@ -7,7 +7,7 @@ namespace Scoring_Service.Services.Conditions
 {
     public class CitizenshipCondition : ICondition
     {
-        public string Id => "CITIZENSHIP_CONDITION";
+        public int Id { get; }
 
         private readonly CitizenshipConditionConfiguration configuration;
         private readonly ILogger<CitizenshipCondition> logger;
@@ -16,6 +16,7 @@ namespace Scoring_Service.Services.Conditions
         {
             this.configuration = configuration.Value;
             this.logger = logger;
+            this.Id = this.configuration.ConditionId;
         }
 
         public ConditionEvaulationResult Evaluate(CustomerRequest customerRequest)

@@ -4,7 +4,7 @@ namespace Scoring_Service.Services.Interfaces
 {
     public interface ICondition
     {
-        public string Id { get; }
+        public int Id { get; }
         public ConditionEvaulationResult Evaluate(CustomerRequest customerRequest);
     }
 }

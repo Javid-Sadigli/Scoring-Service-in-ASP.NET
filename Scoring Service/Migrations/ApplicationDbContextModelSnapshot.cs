@@ -31,8 +31,8 @@ namespace Scoring_Service.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ConditionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ConditionId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("CustomerRequestId")
                         .HasColumnType("uniqueidentifier");

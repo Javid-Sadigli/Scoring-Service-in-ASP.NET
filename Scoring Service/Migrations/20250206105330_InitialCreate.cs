@@ -33,7 +33,7 @@ namespace Scoring_Service.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ConditionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConditionId = table.Column<int>(type: "int", nullable: false),
                     IsSatisfied = table.Column<bool>(type: "bit", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     CustomerRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)

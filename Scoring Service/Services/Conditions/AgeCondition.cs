@@ -7,7 +7,7 @@ namespace Scoring_Service.Services.Conditions
 {
     public class AgeCondition : ICondition
     {
-        public string Id => "AGE_CONDITION";
+        public int Id { get; }
         private readonly AgeConditionConfiguration configuration;
         private readonly ILogger<AgeCondition> logger; 
 
@@ -15,6 +15,7 @@ namespace Scoring_Service.Services.Conditions
         {
             this.configuration = configuration.Value;
             this.logger = logger;
+            this.Id = this.configuration.ConditionId; 
         }
 
         public ConditionEvaulationResult Evaluate(CustomerRequest customerRequest)

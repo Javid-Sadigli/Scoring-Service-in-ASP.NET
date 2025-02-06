@@ -12,7 +12,7 @@ using Scoring_Service.Data;
 namespace Scoring_Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250130132640_InitialCreate")]
+    [Migration("20250206105330_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,8 +34,8 @@ namespace Scoring_Service.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ConditionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ConditionId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("CustomerRequestId")
                         .HasColumnType("uniqueidentifier");
