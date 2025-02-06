@@ -14,9 +14,18 @@ namespace Scoring_Service
             var builder = WebApplication.CreateBuilder(args);
 
             // Db Context
-            builder.Services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("DefaultConnection")));
+            if(builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddDbContext<ApplicationDbContext>(
+                    options => options.UseSqlServer(
+                        builder.Configuration.GetConnectionString("DevConnection")));
+            }
+            else 
+            {
+                builder.Services.AddDbContext<ApplicationDbContext>(
+                    options => options.UseSqlServer(
+                        builder.Configuration.GetConnectionString("DefaultConnection")));
+            }
 
             // Configurations
             builder.Services.Configure<AgeConditionConfiguration>(
