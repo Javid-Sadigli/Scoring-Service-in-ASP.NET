@@ -4,6 +4,7 @@ using Scoring_Service.Data;
 using Scoring_Service.Services;
 using Scoring_Service.Services.Conditions;
 using Scoring_Service.Services.Interfaces;
+using Serilog;
 
 namespace Scoring_Service
 {
@@ -12,6 +13,12 @@ namespace Scoring_Service
         private static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
 
             // Db Context
             if(builder.Environment.IsDevelopment())
@@ -36,9 +43,14 @@ namespace Scoring_Service
                 builder.Configuration.GetSection("Application:Conditions:SalaryCondition"));
 
             // Logging 
+            // builder.Logging.ClearProviders();
+            // builder.Logging.AddConsole();
+            // builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+
             builder.Logging.ClearProviders();
-            builder.Logging.AddConsole();
-            builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+
+            builder.Host.UseSerilog((context, loggerConfig) => 
+                loggerConfig.ReadFrom.Configuration(context.Configuration));
 
             // Mappers 
             builder.Services.AddAutoMapper(typeof(Program));

@@ -56,7 +56,7 @@ namespace Scoring_Service.Services
 
             dbContext.SaveChanges();
 
-            logger.LogInformation("Evaluation completed. {NewLine}CustomerId : {CustomerId}, TotalCredit : {TotalCredit}", Environment.NewLine, customerRequest.Id, response.CreditAmount); 
+            logger.LogInformation("Evaluation completed. CustomerId : {CustomerId}, TotalCredit : {TotalCredit}", customerRequest.Id, response.CreditAmount); 
 
             return response;
         }

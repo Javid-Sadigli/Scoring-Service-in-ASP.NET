@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Scoring_Service.Models.Dtos.Requests;
 using Scoring_Service.Models.Dtos.Responses;
 using Scoring_Service.Services;
