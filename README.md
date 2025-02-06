@@ -91,27 +91,27 @@ Since the conditions are easily extensible, you only need a simple few steps to 
 ### 1) Add the configuration (represents the businnes rule): 
 In the main project, you can see `appsettings.json` file. Here, there are the configurations of existing conditions. You should add the configuration of the new condition here : 
 ```json
- "Application": {
-        "Conditions": {
-            "AgeCondition": {
-                "Min": 18,
-                "Max": 65,
-                "CreditAmount": 1000
-            },
-            "CitizenshipCondition": {
-                "Value": "AZE",
-                "CreditAmount": 500
-            },
-            "SalaryCondition": {
-                "Min": 1000,
-                "CreditAmount": 2000
-            },
+"Application": {
+    "Conditions": {
+        "AgeCondition": {
+            "Min": 18,
+            "Max": 65,
+            "CreditAmount": 1000
+        },
+        "CitizenshipCondition": {
+            "Value": "AZE",
+            "CreditAmount": 500
+        },
+        "SalaryCondition": {
+            "Min": 1000,
+            "CreditAmount": 2000
+        },
 
-            "CustomCondition": {
-                "_comment": "Define here the configuration of condition."
-            }
+        "CustomCondition": {
+            "_comment": "Define here the configuration of condition."
         }
     }
+}
 ```
 
 After adding the configuration into `appsettings.json` file, you need to read it from there inside code. That's why you should create a new configuration class inside `Configuration\Conditions` folder : 
