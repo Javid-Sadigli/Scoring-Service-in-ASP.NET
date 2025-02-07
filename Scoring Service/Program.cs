@@ -40,7 +40,6 @@ namespace Scoring_Service
             builder.Logging.ClearProviders();
 
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
                 .Enrich.FromLogContext()
                 .ReadFrom.Configuration(builder.Configuration)
                 .CreateLogger();

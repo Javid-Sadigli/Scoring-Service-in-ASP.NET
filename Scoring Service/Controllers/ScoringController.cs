@@ -12,7 +12,7 @@ namespace Scoring_Service.Controllers
         private readonly ScoringService scoringService;
         private readonly ILogger<ScoringController> logger;
 
-        private static readonly string LOG_TEMPLATE = "{RequestMethod} request to /api/customer-evaluation{Endpoint}";
+        private static readonly string LOG_TEMPLATE = "{@RequestMethod} request to /api/customer-evaluation{@Endpoint}";
 
         public ScoringController(ScoringService scoringService, ILogger<ScoringController> logger)
         {
