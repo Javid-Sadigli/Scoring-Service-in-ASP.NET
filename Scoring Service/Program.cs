@@ -14,12 +14,6 @@ namespace Scoring_Service
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger();
-
-            builder.Host.UseSerilog();
-
             // Db Context
             if(builder.Environment.IsDevelopment())
             {
@@ -43,14 +37,15 @@ namespace Scoring_Service
                 builder.Configuration.GetSection("Application:Conditions:SalaryCondition"));
 
             // Logging 
-            // builder.Logging.ClearProviders();
-            // builder.Logging.AddConsole();
-            // builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
-
             builder.Logging.ClearProviders();
 
-            builder.Host.UseSerilog((context, loggerConfig) => 
-                loggerConfig.ReadFrom.Configuration(context.Configuration));
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .Enrich.FromLogContext()
+                .ReadFrom.Configuration(builder.Configuration)
+                .CreateLogger();
+
+            builder.Host.UseSerilog(Log.Logger);
 
             // Mappers 
             builder.Services.AddAutoMapper(typeof(Program));
@@ -86,6 +81,7 @@ namespace Scoring_Service
             app.MapControllers();
 
             app.Run();
+
         }
     }
 }
