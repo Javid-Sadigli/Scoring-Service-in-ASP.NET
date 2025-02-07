@@ -1,4 +1,7 @@
 # Scoring-Service-in-ASP.NET
+This project is web API for a scoring service that evaluates customers based on configurable conditions. Each condition represents a business rule that
+determines whether a customer passes scoring and, if applicable, the eligible amount for the customer.
+
 
 ## Table of Contents 
 * [Getting Started](#getting-started)
