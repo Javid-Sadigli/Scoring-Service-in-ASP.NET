@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 using Scoring_Service.Configurations.Conditions;
 using Scoring_Service.Data;
 using Scoring_Service.Services;
@@ -75,8 +76,11 @@ namespace Scoring_Service
 
             app.UseHttpsRedirection();
 
+            app.UseHttpMetrics();
+
             app.UseAuthorization();
 
+            app.MapMetrics();
             app.MapControllers();
 
             app.Run();
