@@ -79,6 +79,7 @@ This command will download the images from the corresponding resources, and will
     * Recorded the output of each condition in:
         * Logs (include condition ID, input data, and output).
         * A database for audit and troubleshooting.
+    * Included structured logging for better traceability.
 
 4. **Database Integration**
     * Designed a database schema to store:
@@ -88,6 +89,12 @@ This command will download the images from the corresponding resources, and will
 5. **Code Quality**
     * Used clean, modular, and testable code.
     * Written unit tests for individual conditions and integration tests for the API.
+
+6. **Metrics for Monitoring**
+    * Used Prometheus to expose metrics such as: 
+        * Total number of scoring requests.
+        * Number of successful/failed scoring requests.
+    * Used Grafana to add visualization for these metrics. 
 
 ## How to add a new Condition?
 Since the conditions are easily extensible, you only need a simple few steps to add new one : 
