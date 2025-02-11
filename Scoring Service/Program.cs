@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
+using Scoring_Service.Configurations;
 using Scoring_Service.Configurations.Conditions;
 using Scoring_Service.Data;
 using Scoring_Service.Services;
@@ -36,6 +38,7 @@ namespace Scoring_Service
                 builder.Configuration.GetSection("Application:Conditions:CitizenshipCondition"));
             builder.Services.Configure<SalaryConditionConfiguration>(
                 builder.Configuration.GetSection("Application:Conditions:SalaryCondition"));
+            builder.Services.Configure<RateLimitingConfiguration>(builder.Configuration.GetSection("RateLimiting"));
 
             // Logging 
             builder.Logging.ClearProviders();
@@ -61,6 +64,21 @@ namespace Scoring_Service
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddRateLimiter(rateLimiterOptions =>
+            {
+                RateLimitingConfiguration? config = builder.Configuration
+                    .GetSection("RateLimiting").Get<RateLimitingConfiguration>();
+
+                if(config != null)
+                {
+                    rateLimiterOptions.AddFixedWindowLimiter("fixed", options => 
+                    {
+                        options.PermitLimit = config.PermitLimit;
+                        options.Window = TimeSpan.FromSeconds(config.WindowSeconds);
+                        options.QueueLimit = config.QueueLimit; 
+                    });
+                }
+            });
 
             var app = builder.Build();
 
@@ -76,6 +94,7 @@ namespace Scoring_Service
 
             app.UseHttpsRedirection();
 
+            app.UseRateLimiter();
             app.UseHttpMetrics();
 
             app.UseAuthorization();

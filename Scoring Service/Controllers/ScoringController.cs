@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Scoring_Service.Models.Dtos.Requests;
 using Scoring_Service.Models.Dtos.Responses;
 using Scoring_Service.Services;
 
 namespace Scoring_Service.Controllers
 {
-    [Route("api/customer-evaluation")]
     [ApiController]
+    [EnableRateLimiting("fixed")]
+    [Route("api/customer-evaluation")]
     public class ScoringController : ControllerBase
     {
         private readonly ScoringService scoringService;
