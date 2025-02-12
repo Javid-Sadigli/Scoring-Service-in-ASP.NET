@@ -11,21 +11,20 @@ using Scoring_Service.Models.Dtos.Responses;
 
 namespace Scoring_Service.IntegrationTests.Controllers
 {
-    public class ScoringControllerTests : IDisposable
+    public class ScoringControllerTests : IClassFixture<CustomWebApplicationFactory>, IDisposable
     {
         private readonly CustomWebApplicationFactory factory; 
         private readonly HttpClient client;
 
-        public ScoringControllerTests()
+        public ScoringControllerTests(CustomWebApplicationFactory factory)
         {
-             factory = new CustomWebApplicationFactory();
-            client = factory.CreateClient();
+            this.factory = factory;
+            this.client = this.factory.CreateClient();
         }
 
         public void Dispose()
         {
             client.Dispose();
-            factory.Dispose();
         }
 
         [Fact]
@@ -47,6 +46,7 @@ namespace Scoring_Service.IntegrationTests.Controllers
             CustomerEvaluationResponseDto? responseBody = JsonConvert.DeserializeObject<CustomerEvaluationResponseDto>(responseBodyJson);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(responseBody);
             Assert.Equal(customerRequest.FinCode, responseBody.CustomerFinCode);
             Assert.Equal(3000, responseBody.CreditAmount);
 
@@ -71,6 +71,7 @@ namespace Scoring_Service.IntegrationTests.Controllers
             CustomerEvaluationResponseDto? responseBody = JsonConvert.DeserializeObject<CustomerEvaluationResponseDto>(responseBodyJson);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(responseBody);
             Assert.Equal(customerRequest.FinCode, responseBody.CustomerFinCode);
             Assert.Equal(3500, responseBody.CreditAmount);
         }
@@ -94,6 +95,7 @@ namespace Scoring_Service.IntegrationTests.Controllers
             CustomerEvaluationResponseDto? responseBody = JsonConvert.DeserializeObject<CustomerEvaluationResponseDto>(responseBodyJson);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(responseBody);
             Assert.Equal(customerRequest.FinCode, responseBody.CustomerFinCode);
             Assert.Equal(1000, responseBody.CreditAmount);
         }
@@ -117,6 +119,7 @@ namespace Scoring_Service.IntegrationTests.Controllers
             CustomerEvaluationResponseDto? responseBody = JsonConvert.DeserializeObject<CustomerEvaluationResponseDto>(responseBodyJson);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(responseBody);
             Assert.Equal(customerRequest.FinCode, responseBody.CustomerFinCode);
             Assert.Equal(2000, responseBody.CreditAmount);
         }
@@ -140,6 +143,7 @@ namespace Scoring_Service.IntegrationTests.Controllers
             CustomerEvaluationResponseDto? responseBody = JsonConvert.DeserializeObject<CustomerEvaluationResponseDto>(responseBodyJson);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(responseBody);
             Assert.Equal(customerRequest.FinCode, responseBody.CustomerFinCode);
             Assert.Equal(500, responseBody.CreditAmount);
         }

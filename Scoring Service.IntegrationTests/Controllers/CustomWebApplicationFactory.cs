@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Scoring_Service.Data;
 using Microsoft.Extensions.Configuration;
+using Testcontainers.MsSql;
 
 namespace Scoring_Service.IntegrationTests.Controllers
 {
-    public class CustomWebApplicationFactory : WebApplicationFactory<Program>
+    public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration configuration; 
+        private readonly MsSqlContainer dbContainer;
 
         public CustomWebApplicationFactory()
         {
@@ -18,30 +20,47 @@ namespace Scoring_Service.IntegrationTests.Controllers
                 .AddJsonFile("appsettings-test.json", optional: false, reloadOnChange: true);
 
             configuration = builder.Build();
+
+            dbContainer = new MsSqlBuilder()
+                .WithImage(configuration["TestDbContainer:DockerImage"])
+                .WithName(configuration["TestDbContainer:ContainerName"])
+                .WithPassword(configuration["TestDbContainer:DbPassword"])
+                .WithPortBinding(1433, true) 
+                .Build();
+        }
+
+        public async Task InitializeAsync()
+        {
+            await dbContainer.StartAsync();
+        }
+
+        public new async Task DisposeAsync()
+        {
+            await dbContainer.StopAsync();
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
-                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
-                if (descriptor != null)
+                var descriptor = services
+                    .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
+                
+                if (descriptor is not null)
                 {
                     services.Remove(descriptor);
                 }
 
-                String? dbConnectionString = configuration.GetConnectionString("TestConnection");
-
-                services.AddDbContext<ApplicationDbContext>(options => options
-                    .UseSqlServer(dbConnectionString));
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(dbContainer.GetConnectionString()));
 
                 using (var scope = services.BuildServiceProvider().CreateScope())
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                    dbContext.Database.ExecuteSqlRaw("EXEC sp_MSforeachtable 'DROP TABLE IF EXISTS ?'");
                     dbContext.Database.Migrate();
                 }
             });
         }
+        
     }
 }
