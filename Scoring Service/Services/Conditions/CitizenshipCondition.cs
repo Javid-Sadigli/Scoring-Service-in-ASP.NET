@@ -21,8 +21,10 @@ namespace Scoring_Service.Services.Conditions
 
         public ConditionEvaulationResult Evaluate(CustomerRequest customerRequest)
         {
-            if (customerRequest.Citizenship.ToUpper().Equals(configuration.Value.ToUpper()))
-            {
+            if (customerRequest.Citizenship is not null &&
+                configuration.Value is not null && 
+                customerRequest.Citizenship.ToUpper().Equals(configuration.Value.ToUpper())
+            ){
                 logger.LogInformation("Customer {CustomerId} has passed the evaluation of {ConditionId}", customerRequest.Id, this.Id);
                 return new ConditionEvaulationResult
                 {
