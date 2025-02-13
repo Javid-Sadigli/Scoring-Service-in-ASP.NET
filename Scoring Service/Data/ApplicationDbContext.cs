@@ -8,7 +8,7 @@ namespace Scoring_Service.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         // Database Sets 
-        public DbSet<ConditionEvaulationResult> EvaulationResults { get; set; }
-        public DbSet<CustomerRequest> CustomerRequests { get; set; }
+        public virtual DbSet<ConditionEvaulationResult> EvaulationResults { get; set; }
+        public virtual DbSet<CustomerRequest> CustomerRequests { get; set; }
     }
 }
