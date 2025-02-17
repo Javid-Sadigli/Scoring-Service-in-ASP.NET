@@ -15,6 +15,7 @@ spec:
       containers:
         - name: prometheus
           image: scoring-service-in-aspnet-prometheus:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 9090
           volumeMounts:
@@ -22,8 +23,14 @@ spec:
               mountPath: /etc/prometheus
             - name: prometheus-data
               mountPath: /prometheus
-
+      volumes:
+        - name: prometheus-config
+          configMap:
+            name: prometheus-config
+        - name: prometheus-data
+          emptyDir: {}
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -39,6 +46,7 @@ spec:
   type: NodePort
 
 ---
+
 apiVersion: v1
 kind: ConfigMap
 metadata:

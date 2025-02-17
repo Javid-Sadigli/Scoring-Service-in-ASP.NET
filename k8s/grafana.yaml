@@ -20,6 +20,9 @@ spec:
           volumeMounts:
             - name: grafana-data
               mountPath: /var/lib/grafana
+      volumes:
+        - name: grafana-data
+          emptyDir: {}
 
 ---
 apiVersion: v1

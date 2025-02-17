@@ -17,7 +17,7 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Javid@123
-      - MSSQL_DATABASE=scoringdb
+      - MSSQL_PID=Developer 
     volumes:
       - sqlserver_data:/var/opt/mssql
 

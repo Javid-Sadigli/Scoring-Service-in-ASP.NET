@@ -31,6 +31,8 @@ namespace Scoring_Service
                         builder.Configuration.GetConnectionString("DefaultConnection")));
             }
 
+            
+
             // Configurations
             builder.Services.Configure<AgeConditionConfiguration>(
                 builder.Configuration.GetSection("Application:Conditions:AgeCondition"));
@@ -88,6 +90,12 @@ namespace Scoring_Service
             //    app.UseSwagger();
             //    app.UseSwaggerUI();
             //}
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate(); 
+            }
 
             app.UseSwagger();
             app.UseSwaggerUI();
