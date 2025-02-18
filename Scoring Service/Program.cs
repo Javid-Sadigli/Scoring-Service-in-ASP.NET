@@ -94,7 +94,11 @@ namespace Scoring_Service
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.Migrate(); 
+
+                if (dbContext.Database.CanConnect()) 
+                {
+                    dbContext.Database.Migrate();
+                }
             }
 
             app.UseSwagger();
