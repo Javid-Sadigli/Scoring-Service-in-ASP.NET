@@ -1,0 +1,75 @@
+# values.yaml
+
+# Replica count for Prometheus
+replicaCount: 1
+
+# Prometheus Docker image settings
+image:
+  repository: prom/prometheus
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Service settings
+service:
+  type: ClusterIP  # Change to NodePort, LoadBalancer, etc. if needed
+  port: 9090       # Port for Prometheus service
+  targetPort: 9090 # Target port for the service
+  nodePort: null    # Set to a specific node port if using NodePort
+
+# ServiceAccount settings
+serviceAccount:
+  create: true  # Set to true to create a service account
+  name: prometheus  # Optional: specify the service account name
+
+# Ingress settings
+ingress:
+  enabled: false  # Set to true if you want to enable ingress
+  # If ingress is enabled, specify the host and other settings here
+  # host: prometheus.example.com
+  # path: /
+  # annotations: {}
+
+# Resources settings (can be left as is if you want default resource requests/limits)
+resources: {}
+
+# Prometheus configuration settings
+prometheus:
+  prometheusSpec:
+    externalLabels:
+      release: prometheus
+    retention: "10d"  # Retention period for data
+
+# Storage settings
+storageSpec:
+  volumeClaimTemplate:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi  # Adjust storage size as needed
+
+# Autoscaling settings
+autoscaling:
+  enabled: false  # Set to true if you want to enable autoscaling
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+# NodeSelector settings (optional, if you need to control pod placement)
+nodeSelector: {}
+
+# Tolerations settings (optional)
+tolerations: []
+
+# Affinity settings (optional)
+affinity: {}
+
+# ServiceMonitor settings (if using Prometheus Operator)
+serviceMonitor:
+  enabled: false  # Set to true if you're using Prometheus Operator to discover services
+  namespace: default
+  interval: 30s
+  scrapeTimeout: 10s
+  metricRelabelings: []
+  relabelings: []
