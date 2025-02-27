@@ -32,6 +32,8 @@ services:
     configs:
       - source: prometheus_config
         target: /etc/prometheus/prometheus.yml
+      - source: prometheus_alert_rules_config
+        target: /etc/prometheus/alert_rules.yml
     depends_on:
       - scoring-service
 
@@ -44,11 +46,34 @@ services:
     depends_on:
       - prometheus
 
+  alertmanager:
+    image: quay.io/prometheus/alertmanager:latest
+    container_name: alertmanager
+    ports:
+      - "9093:9093"
+    restart: unless-stopped
+    volumes:
+      - alertmanager_data:/alertmanager/data
+    configs:
+      - source: alertmanager_config
+        target: /etc/alertmanager/alertmanager.yml
+    environment:
+      - SMTP_AUTH_USERNAME=${SMTP_AUTH_USERNAME}
+      - SMTP_AUTH_PASSWORD=${SMTP_AUTH_PASSWORD}
+      - SMTP_AUTH_RECEIVER_EMAIL=${SMTP_AUTH_RECEIVER_EMAIL}
+    depends_on:
+      - prometheus
+
 volumes:
   sqlserver_data:
   prometheus_data:
   grafana_data:
+  alertmanager_data:
 
 configs:
   prometheus_config:
     file: ./prometheus.yml
+  prometheus_alert_rules_config: 
+    file: ./alert_rules.yml
+  alertmanager_config:
+    file: ./alertmanager.yml
