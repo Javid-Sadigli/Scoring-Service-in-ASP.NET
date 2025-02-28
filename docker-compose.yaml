@@ -58,6 +58,7 @@ services:
       - source: alertmanager_config
         target: /etc/alertmanager/alertmanager.yml
     environment:
+      - SMTP_SMARTHOST=${SMTP_SMARTHOST}
       - SMTP_AUTH_USERNAME=${SMTP_AUTH_USERNAME}
       - SMTP_AUTH_PASSWORD=${SMTP_AUTH_PASSWORD}
       - SMTP_AUTH_RECEIVER_EMAIL=${SMTP_AUTH_RECEIVER_EMAIL}

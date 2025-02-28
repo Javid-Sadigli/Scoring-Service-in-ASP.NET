@@ -1,0 +1,14 @@
+route: 
+  receiver: 'email-receiver'
+  repeat_interval: 4h
+  group_by: [alertname]
+
+receivers: 
+  - name: 'email-receiver'
+    email_configs: 
+      - smarthost: "{{ .Values.email_config.smarthost }}"
+        auth_username: "{{ .Values.email_config.auth_username }}"
+        auth_password: "{{ .Values.email_config.auth_password }}"
+        from: "{{ .Values.email_config.from }}"
+        to: "{{ .Values.email_config.to }}"
+        require_tls: {{ .Values.email_config.require_tls }}
