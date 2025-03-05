@@ -13,8 +13,8 @@ namespace Scoring_Service.Services.Conditions
         private readonly ILogger<AgeCondition> logger; 
         private readonly Counter evaluationCounter = Metrics
             .CreateCounter(
-                "scoring_service_age_condition_evaluations", 
-                "The number of evaluations on customer for Age Condition", 
+                "scoring_service_age_condition_evaluations_total", 
+                "The number of evaluations on customer for Age Condition.", 
                 new CounterConfiguration{LabelNames = new[] {"is_satisfied"}}
             );
 

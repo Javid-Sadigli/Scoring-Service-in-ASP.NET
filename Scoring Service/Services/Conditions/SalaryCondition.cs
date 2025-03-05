@@ -14,8 +14,8 @@ namespace Scoring_Service.Services.Conditions
         private readonly ILogger<SalaryCondition> logger; 
         private readonly Counter evaluationCounter = Metrics
             .CreateCounter(
-                "scoring_service_salary_condition_evaluations", 
-                "The number of evaluations on customer for Salary Condition", 
+                "scoring_service_salary_condition_evaluations_total", 
+                "The number of evaluations on customer for Salary Condition.", 
                 new CounterConfiguration{LabelNames = new[] {"is_satisfied"}}
             );
 
