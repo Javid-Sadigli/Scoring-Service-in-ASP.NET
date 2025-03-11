@@ -22,7 +22,8 @@ spec:
               mountPath: /var/lib/grafana
       volumes:
         - name: grafana-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: grafana-pvc  
 
 ---
 apiVersion: v1
@@ -38,3 +39,14 @@ spec:
       targetPort: 3000
       nodePort: 30003
   type: NodePort
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

@@ -28,4 +28,5 @@ spec:
           configMap:
             name: prometheus-config
         - name: prometheus-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: prometheus-pvc  
